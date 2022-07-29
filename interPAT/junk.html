@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        #canvas1{
+            /* background: black; */
+            height: 100vh;
+            width: 100vw;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas1"></canvas>
+    <script>
+        const canvas =document.getElementById("canvas1");
+        const ctx =canvas.getContext('2d');
+        canvas.height=window.innerHeight;
+        canvas.width=window.innerWidth;
+        function drawshape(radius,inradius,n) {
+            ctx.beginPath();
+            ctx.strokeStyle='green';
+            ctx.fillStyle='yellow';
+            ctx.save();
+            ctx.translate(canvas.width/2,canvas.height/2);
+            // ctx.moveTo(canvas.width/2,canvas.height/2);
+            // ctx.lineTo(canvas.width/2,canvas.height/2-radius);
+            ctx.moveTo(0,0);
+            for (let i = 0; i <=n; i++) {
+                ctx.lineTo(0,0-radius);
+                ctx.rotate(Math.PI/n);
+                ctx.lineTo(0,0-(radius*inradius));
+                ctx.rotate(Math.PI/n);
+            }
+            ctx.restore();
+                ctx.stroke();
+            ctx.fill();
+            ctx.closePath();
+        }
+        drawshape(60,2,6);
+    </script>
+</body>
+</html> 

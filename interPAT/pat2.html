@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORK 3</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        #canvas1{
+            position: absolute;
+            background: #32de84;
+            width: 100%;
+            z-index: 1;
+            height: 100%;
+        }
+        h1{
+         color:white;   
+         position: absolute;
+         z-index: 5;
+         top: 50%;
+         left: 10%;
+         letter-spacing: 20px;
+         font-family: 'Shadows Into Light', cursive;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false" onkeydown="return false">
+<body>
+    <canvas id="canvas1"></canvas>
+    <h1 id="txt">CLICK/DRAG ANYWHERE TO BEGIN</h1>
+    <script>
+            const canvas = document.getElementById('canvas1');
+            const ctx=canvas.getContext('2d');
+            canvas.width=window.innerWidth;
+            canvas.height=window.innerHeight;
+            let drawing=false;
+            // ctx.globalCompositeOperation='lighten';
+            // ctx.globalCompositeOperation='destination-over';
+            class Root{
+                constructor(x,y)
+                {
+                    this.x=x;
+                    this.y=y;
+                    this.speedX=Math.random()*4-2;
+                    this.speedY=Math.random()*4-2;
+                    this.maxSize=Math.random()*7+5;
+                    this.size=Math.random()*1+2;
+                    this.angle=0;
+                    this.lightness=10;
+                }
+                update(){
+                    this.x+=this.speedX+Math.cos(this.angle);
+                    this.y+=this.speedY;
+                    this.angle+=Math.random()*0.6-0.03;
+                    this.size+=Math.random()*0.2+0.05;
+                    if(this.lightness<70)this.lightness+=0.5;
+                    if (this.size<this.maxSize) {
+                        ctx.beginPath();
+                        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+                        // ctx.fillStyle='hsl(140,100%,'+this.lightness+'%)';
+                        ctx.fillStyle='#7a6a4f';
+                        ctx.fill();
+                        ctx.stroke();
+                        requestAnimationFrame(this.update.bind(this));
+                    }
+                    else{
+                        const flo = new Flower(this.x,this.y,this.size);
+                        flo.grow();
+                    }
+                }
+            }
+        class Flower{
+            constructor(x,y,size){
+                this.x=x;
+                this.y=y;
+                this.size=size;
+                this.max=this.size+Math.random()*50;
+                this.image=new Image();
+                this.image.src='flowers2.png';
+                this.frame=100;
+                this.flowertypeX=Math.floor(Math.random()*3);
+                this.flowertypeY=Math.floor(Math.random()*3);
+                this.size>11.5?this.willFlower=true:this.willFlower=false;
+                this.angle=0;
+                };
+                grow(){
+                    if(this.size<this.max&& this.willFlower){
+                        this.size+=Math.random()*0.3+0.2;
+                        this.angle+=Math.random()*0.05-0.25;
+                        ctx.save();
+                        ctx.translate(this.x,this.y);
+                        ctx.rotate(this.angle);
+                        ctx.drawImage(this.image,this.frame*this.flowertypeX,this.frame*this.flowertypeY,this.frame,this.frame,0-this.size/2,0-this.size/2,this.size,this.size);
+                        ctx.restore();
+                    }
+                    requestAnimationFrame(this.grow.bind(this));
+                }
+            }
+            window.addEventListener('mousemove',function(event){
+                if(drawing){
+                    for (let i = 0; i < 3; i++) {
+                        const root=new Root(event.x,event.y);
+                        root.update();
+                    }
+                }
+            });
+            
+            window.addEventListener('click',function(event){
+                    for (let i = 0; i < 10; i++) {
+                        const root=new Root(event.x,event.y);
+                        root.update();
+                    }
+            });
+
+            window.addEventListener('mousedown',function(e){
+                txt.style.display='none';
+            drawing=true;
+            });            
+            window.addEventListener('mouseup',function(e1){
+            drawing=false;
+            });
+            window.addEventListener('touchmove',function(event){
+                txt.style.display='none';
+                var touchloc=event.targetTouches[0];
+                    for (let i = 0; i < 10; i++) {
+                        const root=new Root(touchloc.pageX,touchloc.pageY);
+                        root.update();
+                }
+            });
+            
+                 
+
+   </script>
+ </body>
+</html>

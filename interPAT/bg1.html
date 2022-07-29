@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORK 4</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* background: black; */
+            overflow: hidden;
+            /* background: linear-gradient(-45deg, #ee7752, #e74f4f, #23a6d5, #23d5ab); */
+            background: linear-gradient(-45deg, Violet, Blue, Green, Yellow, Orange, Red);
+            background-size: 700% 700%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 30% 50%;
+            }
+
+            50% {
+                background-position: 120% 150%;
+            }
+            75% {
+                background-position: 100% 100%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        #canvas1 {
+            position: absolute;
+            width: 100%;
+            z-index: 1;
+            height: 100%;
+            opacity: 0.75;
+        }
+
+        h1 {
+            color: white;
+            position: absolute;
+            z-index: 5;
+            top: 50%;
+            left: 10%;
+            letter-spacing: 20px;
+            font-family: 'Shadows Into Light', cursive;
+        }
+    </style>
+</head>
+
+<!-- <body oncontextmenu="return false" onkeydown="return false"> -->
+
+<body>
+    <canvas id="canvas1"></canvas>
+    <!-- <h1 id="txt">CLICK/DRAG ANYWHERE TO BEGIN</h1> -->
+    <script>
+        const canvas = document.getElementById('canvas1');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let BOXarray = [];
+        class BOXES {
+            constructor() {
+                this.y = Math.floor(Math.random() * canvas.height) - 1000;
+                this.x = Math.floor(Math.random() * canvas.width);
+                this.velocity = Math.random() * 2 + 1;
+                // this.velocity = Math.random() * 0.005;
+                this.size = Math.floor(Math.random() * 15 - 5);
+                this.angle = 45;
+            }
+            animate() {
+                ctx.strokeStyle = 'black';
+                //ctx.fillStyle = 'rgb(0,0,0,0.5)';
+                ctx.save();
+                ctx.translate(this.x + this.size / 2, this.y + this.size / 2); // moves the pivot point
+                // ctx.rotate(this.angle * Math.PI / 180); // rotates the square
+                // ctx.fillRect(x, y, w, h);
+                ctx.rect(this.x, this.y, this.size, this.size);
+                ctx.lineWidth = 2;
+                ctx.closePath();
+                ctx.stroke();
+                ctx.restore();
+                ctx.beginPath();
+                // ctx.fill();
+                // ctx.rotate(Math.PI*1.25);
+            }
+            update() {
+                this.y += this.velocity;
+                this.size += 0.05;
+                if (this.y >= canvas.height) {
+                    this.y = -1000;
+                    this.size = Math.floor(Math.random() * 15 - 30);
+                    this.x = Math.floor(Math.random() * canvas.width);
+                }
+            }
+
+        }
+        function init() {
+            for (let i = 0; i < 200; i++) {
+                BOXarray.push(new BOXES);
+            }
+        }
+        init();
+        function handle() {
+            ctx.fillStyle = 'rgba(255,255,255,0.01)';
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < BOXarray.length; i++) {
+                BOXarray[i].animate();
+                BOXarray[i].update();
+            }
+            requestAnimationFrame(handle);
+        }
+        handle();
+    </script>
+</body>
+
+</html>

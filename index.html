@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: center;
+        min-height: 100vh;
+        /* flex-direction: column; */
+        background: black;
+        overflow-x: hidden;
+      }
+      a {
+        position: relative;
+        display: inline-block;
+        padding: 25px 30px;
+        margin: 10px 30px;
+        text-decoration: none;
+        color: #03e9f4;
+        font-size: 24px;
+        text-transform: uppercase;
+        transition: 0.5s;
+        overflow: hidden;
+        letter-spacing: 4px;
+        opacity: 0;
+      }
+      a:hover {
+        background: #03e;
+        color: white;
+        box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
+          0 0 200px #03e9f4;
+      }
+      a span {
+        position: absolute;
+        display: block;
+      }
+      a span:nth-child(1) {
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #03e);
+        animation: animate1 1s linear infinite;
+      }
+      @keyframes animate1 {
+        0% {
+          left: -100%;
+        }
+        50%,
+        100% {
+          left: 100%;
+        }
+      }
+      a span:nth-child(2) {
+        top: -100%;
+        right: 0;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(180deg, transparent, #03e);
+        animation: animate2 1s linear infinite;
+        animation-delay: 0.25s;
+      }
+      @keyframes animate2 {
+        0% {
+          top: -100%;
+        }
+        50%,
+        100% {
+          top: 100%;
+        }
+      }
+      a span:nth-child(3) {
+        bottom: 0;
+        right: -100%;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(270deg, transparent, #03e);
+        animation: animate3 1s linear infinite;
+        animation-delay: 0.5s;
+      }
+      @keyframes animate3 {
+        0% {
+          right: -100%;
+        }
+        50%,
+        100% {
+          right: 100%;
+        }
+      }
+      a span:nth-child(4) {
+        bottom: -100%;
+        left: 0;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(180deg, transparent, #03e);
+        animation: animate4 1s linear infinite;
+        animation-delay: 0.75s;
+      }
+      @keyframes animate4 {
+        0% {
+          bottom: -100%;
+        }
+        50%,
+        100% {
+          bottom: 100%;
+        }
+      }
+      h1 {
+        width: 100%;
+        position: relative;
+        text-align: center;
+        color: white;
+        margin-bottom: 80px;
+      }
+      .type1 span:nth-child(4),
+      .type1 span:nth-child(3),
+      .type1 span:nth-child(2),
+      .type1 span:nth-child(1) {
+        background: linear-gradient(180deg, transparent, red);
+      }
+      .type2 span:nth-child(4),
+      .type2 span:nth-child(3),
+      .type2 span:nth-child(2),
+      .type2 span:nth-child(1) {
+        background: linear-gradient(180deg, transparent, olive);
+      }
+      .type1:hover {
+        background: red;
+      }
+      .type2:hover {
+        background: olive;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="head">
+      WELCOME TO MY PAGE <br />
+      Some of my productions are as follows
+    </h1>
+    <a href="interPAT/pat1.html" class="blocks type1">
+      <span></span><span></span><span></span><span></span>
+      PATTERN 1
+    </a>
+    <a href="interPAT/pat2.html" class="blocks type1">
+      <span></span><span></span><span></span><span></span>
+      PATTERN 2
+    </a>
+    <a href="interPAT/pat3.html" class="blocks type1">
+      <span></span><span></span><span></span><span></span>
+      PATTERN 3
+    </a>
+    <a href="interPAT/pat4.html" class="blocks type1">
+      <span></span><span></span><span></span><span></span>
+      PATTERN 4
+    </a>
+    <a href="interPAT/pat5.html" class="blocks type1">
+      <span></span><span></span><span></span><span></span>
+      PATTERN 5
+    </a>
+    <a href="interPAT/pat6.html" class="blocks type1">
+      <span></span><span></span><span></span><span></span>
+      PATTERN 6
+    </a>
+    <a href="interPAT/im1.html" class="blocks type3">
+      <span></span><span></span><span></span><span></span>
+      image transformation1
+    </a>
+    <a href="interPAT/bg1.html" class="blocks type2">
+      <span></span><span></span><span></span><span></span>
+      background 1
+    </a>
+    <a href="interPAT/bg2.html" class="blocks type2">
+      <span></span><span></span><span></span><span></span>
+      background 2
+    </a>
+    <a href="interPAT/bg3.html" class="blocks type2">
+      <span></span><span></span><span></span><span></span>
+      background 3
+    </a>
+    <a href="assets/bank.rar" class="blocks type3" download>
+      <span></span><span></span><span></span><span></span>
+      Bank
+    </a>
+    <a href="assets/student.rar" class="blocks type2" download>
+      <span></span><span></span><span></span><span></span>
+      Student
+    </a>
+    <script>
+      var t1 = gsap.timeline();
+      t1.from(".head", { duration: 1, color: "yellow", scale: 3, y: 100 });
+      t1.to(".blocks", {
+        duration: 1,
+        y: 10,
+        opacity: 1,
+        ease: "elastic",
+        stagger: 0.5,
+      });
+    </script>
+  </body>
+</html>

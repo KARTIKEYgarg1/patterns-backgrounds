@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORK 2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: black;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: white;
+            position: absolute;
+            z-index: 5;
+            top: 50%;
+            left: 20%;
+            letter-spacing: 20px;
+            font-family: 'Shadows Into Light', cursive;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas1"></canvas>
+    <h1 id="x">CLICK ANYWHERE TO BEGIN</h1>
+    <script>
+        let draw = 0;
+        const canvas = document.getElementById('canvas1');
+        const ctx = canvas.getContext('2d');
+        const particleArray = [];
+        let hue = 0;
+        window.addEventListener('mouseover', function () {
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+        });
+
+        const mouse = {
+            x: undefined,
+            y: undefined,
+        };
+        canvas.addEventListener('click', function (event) {
+            x.style.display = 'none';
+            draw = 1;
+            mouse.x = event.x;
+            mouse.y = event.y;
+            for (let i = 0; i < 300; i++) {
+                particleArray.push(new Particle());
+            }
+
+        });
+
+        canvas.addEventListener('mousemove', function (event) {
+            if (draw) {
+                mouse.x = event.x;
+                mouse.y = event.y;
+                for (let i = 0; i < 30; i++) {
+                    particleArray.push(new Particle());
+                }
+            }
+        });
+
+        window.addEventListener('touchmove', function (event) {
+            x.style.display = 'none';
+            var touchloc = event.targetTouches[0];
+            mouse.x = touchloc.pageX;
+            mouse.y = touchloc.pageY;
+            for (let i = 0; i < 20; i++) {
+                particleArray.push(new Particle());
+            }
+        });
+        class Particle {
+            constructor() {
+                this.x = mouse.x;
+                this.y = mouse.y;
+                this.size = Math.random();
+                this.m = 0;
+                this.speedX = Math.random() * 15 - 5;
+                this.speedY = Math.random() * 15 - 5;
+                this.color = 'hsl(' + hue + ',100%,50%)';
+            }
+
+            update() {
+                this.m++;
+                if (this.m == 15) {
+                    this.speedX = 10000;
+                    this.color = 'transparent';
+                    return;
+                }
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.size > 0.4) {
+                    this.size -= 0.1;
+                }
+            }
+            draw() {
+                // ctx.strokeStyle = this.color;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size * 10, 0, Math.PI * 2);
+                hue++;
+                ctx.fill();
+                // ctx.stroke();
+            }
+
+        }
+        function handle() {
+            for (let index = 0; index < particleArray.length; index++) {
+                particleArray[index].draw();
+                particleArray[index].update();
+                // console.log(particleArray.length);
+                if (particleArray[index].size >= 0.7) {
+                    particleArray.splice(index, 1);
+                    index--;
+                }
+            }
+
+        }
+        function animate() {
+            ctx.fillStyle = "rgba(0,0,0,0.5)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            handle();
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+
+</html>

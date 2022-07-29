@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORK 4</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+            /* 
+            background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
+            background: linear-gradient(to right, #1e3c72, #2a5298, #0F2027); */
+            background: yellow;
+            background: #0F2027;
+        }
+
+        #canvas1 {
+            position: absolute;
+            width: 100%;
+            z-index: 1;
+            height: 100%;
+            background: #0F2027;
+            /* background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
+            background: linear-gradient(to right, #1e3c72, #2a5298, #0F2027); */
+
+        }
+
+        h1 {
+            color: white;
+            position: absolute;
+            text-align: center;
+            z-index: 5;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            letter-spacing: 20px;
+            font-family: 'Shadows Into Light', cursive;
+        }
+    </style>
+</head>
+
+<!-- <body oncontextmenu="return false" onkeydown="return false"> -->
+
+<body>
+    <canvas id="canvas1"></canvas>
+    <h1 id="txt">HI EVERYONE!  WELCOME TO MY PAGE</h1>
+    <script src="vanilla-tilt.min.js"></script>
+    <script>
+        const canvas = document.getElementById('canvas1');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let BOXarray = [];
+        class BOXES {
+            constructor() {
+                this.y = Math.floor(Math.random() * canvas.height) - 1000;
+                this.x = Math.floor(Math.random() * canvas.width);
+                this.velocity = Math.random() * 2 + 1;
+                // this.velocity = Math.random() * 0.005;
+                this.size = Math.floor(Math.random());
+                this.angle = 45;
+                this.yO = this.y;
+            }
+            animate() {
+                ctx.strokeStyle = 'white';
+                ctx.fillStyle = 'White';
+                ctx.save();
+                ctx.translate(this.x + this.size / 2, this.y + this.size / 2); // moves the pivot point
+                ctx.rotate(this.angle * Math.PI / 180); // rotates the square
+                // ctx.fillRect(x, y, w, h);
+                // ctx.rect(this.x, this.y, this.size, this.size);
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.lineWidth = 2;
+                ctx.closePath();
+                ctx.stroke();
+                ctx.restore();
+                ctx.fill();
+                ctx.beginPath();
+                // ctx.rotate(Math.PI*1.25);
+            }
+            update() {
+                this.y += this.velocity;
+                // this.y += this.velocity;
+                this.size += 0.001;
+
+                if (this.y >= canvas.height) {
+                    this.y = -1000;
+                    this.size = Math.floor(Math.random());
+                    this.x = Math.floor(Math.random() * canvas.width);
+                }
+            }
+
+        }
+        function init() {
+            for (let i = 0; i < 200; i++) {
+                BOXarray.push(new BOXES);
+            }
+        }
+        init();
+        function handle() {
+            // ctx.fillStyle = 'rgba(255,255,255,0.01)';
+            // ctx.fillRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < BOXarray.length; i++) {
+                BOXarray[i].animate();
+                BOXarray[i].update();
+            }
+            requestAnimationFrame(handle);
+        }
+        handle();
+        setInterval(function path() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }, 50);
+
+        VanillaTilt.init(document.querySelectorAll("#canvas1"), {
+            max: 20,
+            speed: 400,
+            scale:2
+        });
+    </script>
+</body>
+
+</html>
